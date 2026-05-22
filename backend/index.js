@@ -15,7 +15,15 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const isDev = process.env.NODE_ENV === "development";
+const corsOptions = isDev
+  ? { origin: true, credentials: true } // reflect request origin in dev (works with dynamic Vite ports)
+  : {
+      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      credentials: true,
+    };
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

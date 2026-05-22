@@ -12,7 +12,10 @@ export const sendVerificationEmail = async (email, verificationToken) => {
       from: sender,
       to: recipient,
       subject: "Verify your email",
-      html: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", verificationToken),
+      html: VERIFICATION_EMAIL_TEMPLATE.replace(
+        "{verificationCode}",
+        verificationToken,
+      ),
       category: "Email Verification",
     });
     console.log("Verification email sent successfully", response);
