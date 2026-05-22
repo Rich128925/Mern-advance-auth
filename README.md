@@ -2,7 +2,6 @@
 
 ![Demo App](/frontend/public/screenshot-for-readme.png)
 
-[Video Tutorial on Youtube](https://youtu.be/pmvEgZC55Cg)
 
 About This Course:
 
@@ -28,7 +27,7 @@ About This Course:
 -   🏠 Dashboard Page
 -   🔄 Implementing Forgot Password
 -   🚀 Super Detailed Deployment
--   ✅ This is a lot of work. Support my work by subscribing to the [Channel](https://www.youtube.com/@asaprogrammer_)
+
 
 ### Setup .env file
 
