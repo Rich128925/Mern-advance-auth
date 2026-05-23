@@ -1,4 +1,4 @@
-import "./config.js"; // 👈 must be the very first import
+import "./config.js";
 
 import express from "express";
 import cors from "cors";
@@ -13,30 +13,51 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// ✅ Render provides PORT automatically
 const PORT = process.env.PORT || 5000;
 
+// ✅ CORS setup
 const isDev = process.env.NODE_ENV === "development";
+
 const corsOptions = isDev
-  ? { origin: true, credentials: true } // reflect request origin in dev (works with dynamic Vite ports)
+  ? {
+      origin: true,
+      credentials: true,
+    }
   : {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      origin: process.env.CLIENT_URL,
       credentials: true,
     };
 
+// ✅ Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// ✅ Routes
 app.use("/api/auth", authRoutes);
 
+// ✅ Test Route
+app.get("/", (req, res) => {
+  res.send("🚀 API is running...");
+});
+
+// ✅ Serve frontend in production (optional)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(
+      path.resolve(__dirname, "frontend", "dist", "index.html")
+    );
   });
 }
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log("Server is running on port: ", PORT);
+// ✅ Connect DB first
+connectDB();
+
+// ✅ Start server
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
